@@ -142,29 +142,12 @@ void wait_for_keypress(void)
 	sleep_if_empty(&tty_table[0].secondary);
 }
 
-int judge=-1;
-int f1=0,f2=0,f3=0;
-
 void copy_to_cooked(struct tty_struct * tty)
 {
 	signed char c;
 
 	while (!EMPTY(tty->read_q) && !FULL(tty->secondary)) {
 		GETCH(tty->read_q,c);
-		if(c==27)
-			f1=1;
-		else if(f1==1&&f2==0&&c==91)
-			f2=1;
-		else if(f1==1&&f2==1&&c==91)
-			f3=1;
-		else if(f1==1&&f2==1&&f3==1&&c==76)
-		{
-			judge*=-1;
-			continue;
-		}
-		else
-			f1=f2=f3=0;
-
 		if (c==13)
 			if (I_CRNL(tty))
 				c=10;
@@ -365,4 +348,3 @@ void do_tty_interrupt(int tty)
 void chr_dev_init(void)
 {
 }
-

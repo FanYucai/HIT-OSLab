@@ -101,4 +101,3 @@ int sys_write(unsigned int fd,char * buf,int count)
 	printk("(Write)inode->i_mode=%06o\n\r",inode->i_mode);
 	return -EINVAL;
 }
-

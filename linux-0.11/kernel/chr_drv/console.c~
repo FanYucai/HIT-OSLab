@@ -442,8 +442,6 @@ static void restore_cur(void)
 	gotoxy(saved_x, saved_y);
 }
 
-extern int judge;
-
 void con_write(struct tty_struct * tty)
 {
 	int nr;
@@ -460,9 +458,6 @@ void con_write(struct tty_struct * tty)
 						pos -= video_size_row;
 						lf();
 					}
-					if(judge==1)
-						if((c>='a'&&c<='z')||(c>='A'&&c<='Z')||(c>='0'&&c<='9'))
-							c='*';
 					__asm__("movb attr,%%ah\n\t"
 						"movw %%ax,%1\n\t"
 						::"a" (c),"m" (*(short *)pos)
