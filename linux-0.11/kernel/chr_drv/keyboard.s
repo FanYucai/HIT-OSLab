@@ -242,7 +242,7 @@ func:
 	pushl %eax
 	pushl %ecx
 	pushl %edx
-	call show_stat
+
 	popl %edx
 	popl %ecx
 	popl %eax
