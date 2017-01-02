@@ -48,11 +48,7 @@ dep:
 	(cd blk_drv; make dep)
 
 ### Dependencies:
-sem.s sem.o: sem.c ../include/errno.h ../include/signal.h \  
-  ../include/sys/types.h ../include/sys/wait.h ../include/linux/sched.h \  
-  ../include/linux/head.h ../include/linux/fs.h ../include/linux/mm.h \  
-  ../include/linux/kernel.h ../include/linux/tty.h ../include/termios.h \  
-  ../include/asm/segment.h 
+sem.s sem.o: sem.c ../include/linux/kernel.h ../include/unistd.h
 exit.s exit.o: exit.c ../include/errno.h ../include/signal.h \
   ../include/sys/types.h ../include/sys/wait.h ../include/linux/sched.h \
   ../include/linux/head.h ../include/linux/fs.h ../include/linux/mm.h \

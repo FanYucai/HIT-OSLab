@@ -129,30 +129,31 @@
 #define __NR_ssetmask	69
 #define __NR_setreuid	70
 #define __NR_setregid	71
-#define __NR_sem_open   72
-#define __NR_sem_wait   73
-#define __NR_sem_post   74
+#define __NR_sem_open 	72
+#define __NR_sem_wait	73
+#define __NR_sem_post	74
 #define __NR_sem_unlink 75
 
-#define _syscall0(type,name) \
-
-#define Maxlength 10
-struct queue
+#define QUE_LEN 16
+#define SEM_FAILED  (void*) 0
+struct semaphore_queue
 {
-    int front;
-    int rear;
-    struct task_struct *wait[Maxlength];
+	int front;
+	int rear;
+	struct task_struct *wait_tasks[QUE_LEN];
 };
-typedef struct queue queue;
+typedef struct semaphore_queue sem_queue;
 
-struct sem_t
+struct semaphore_t
 {
     int value;
-    int used;
-    struct queue waitsem;
+    int occupied;
+    char name[16];
+    struct semaphore_queue wait_queue;
 };
-typedef struct sem_t sem_t;
-
+typedef struct semaphore_t sem_t;
+ 
+#define _syscall0(type,name) \
 type name(void) \
 { \
 long __res; \
