@@ -135,6 +135,24 @@
 #define __NR_sem_unlink 75
 
 #define _syscall0(type,name) \
+
+#define Maxlength 10
+struct queue
+{
+    int front;
+    int rear;
+    struct task_struct *wait[Maxlength];
+};
+typedef struct queue queue;
+
+struct sem_t
+{
+    int value;
+    int used;
+    struct queue waitsem;
+};
+typedef struct sem_t sem_t;
+
 type name(void) \
 { \
 long __res; \
