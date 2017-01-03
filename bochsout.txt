@@ -34,12 +34,12 @@
 00000000000i[     ]   SB16 support: no
 00000000000i[     ]   USB support: no
 00000000000i[     ]   VGA extension support: vbe 
-00000000000i[MEM0 ] allocated memory at 0xb6035008. after alignment, vector=0xb6036000
+00000000000i[MEM0 ] allocated memory at 0xb6072008. after alignment, vector=0xb6073000
 00000000000i[MEM0 ] 16.00MB
 00000000000i[MEM0 ] rom at 0xfffe0000/131072 ('./bochs/BIOS-bochs-latest')
 00000000000i[MEM0 ] rom at 0xc0000/39424 ('./bochs/vgabios.bin')
 00000000000i[CMOS ] Using local time for initial clock
-00000000000i[CMOS ] Setting initial clock to: Tue Jan  3 15:54:51 2017 (time0=1483430091)
+00000000000i[CMOS ] Setting initial clock to: Tue Jan  3 16:05:45 2017 (time0=1483430745)
 00000000000i[DMA  ] channel 4 used by cascade
 00000000000i[DMA  ] channel 2 used by Floppy Drive
 00000000000i[FDD  ] fd0: './linux-0.11/Image' ro=0, h=2,t=80,spt=18
@@ -234,53 +234,38 @@
 00021827490i[FDD  ] read() on floppy image returns 0
 00021872445i[FDD  ] read() on floppy image returns 0
 00021917400i[FDD  ] read() on floppy image returns 0
-00021963618i[FDD  ] read() on floppy image returns 0
-00022008573i[FDD  ] read() on floppy image returns 0
-00022053528i[FDD  ] read() on floppy image returns 0
-00022098483i[FDD  ] read() on floppy image returns 0
-00022143438i[FDD  ] read() on floppy image returns 0
-00022188393i[FDD  ] read() on floppy image returns 0
-00022233348i[FDD  ] read() on floppy image returns 0
-00022278303i[FDD  ] read() on floppy image returns 0
-00022323258i[FDD  ] read() on floppy image returns 0
-00022368213i[FDD  ] read() on floppy image returns 0
-00022413168i[FDD  ] read() on floppy image returns 0
-00022463638i[BIOS ] int13_harddisk: function 15, unmapped device for ELDL=81
-00684048148i[XGUI ] X11 Beep ON (frequency=inf)
-00684510861i[XGUI ] X11 Beep OFF
-00684510861i[PIT81] Changing GATE 2 to: 0
-00812785610i[XGUI ] X11 Beep ON (frequency=749.96)
-00812785610i[PIT81] Changing GATE 2 to: 1
-00813232911i[XGUI ] X11 Beep OFF
-00813232911i[PIT81] Changing GATE 2 to: 0
-00894545958i[XGUI ] X11 Beep ON (frequency=749.96)
-00894545958i[PIT81] Changing GATE 2 to: 1
-00894994211i[XGUI ] X11 Beep OFF
-00894994211i[PIT81] Changing GATE 2 to: 0
-00986603042i[XGUI ] X11 Beep ON (frequency=749.96)
-00986603042i[PIT81] Changing GATE 2 to: 1
-00987075679i[XGUI ] X11 Beep OFF
-00987075679i[PIT81] Changing GATE 2 to: 0
-01100860000p[XGUI ] >>PANIC<< POWER button turned off.
-01100860000i[CPU  ] CPU is in protected mode (active)
-01100860000i[CPU  ] CS.d_b = 32 bit
-01100860000i[CPU  ] SS.d_b = 32 bit
-01100860000i[CPU  ] | EAX=ffffffff  EBX=ffffffff  ECX=0001b1dc  EDX=00000016
-01100860000i[CPU  ] | ESP=0001b118  EBP=00020eac  ESI=00000000  EDI=00000001
-01100860000i[CPU  ] | IOPL=0 id vip vif ac vm rf nt of df IF tf sf zf af pf cf
-01100860000i[CPU  ] | SEG selector     base    limit G D
-01100860000i[CPU  ] | SEG sltr(index|ti|rpl)     base    limit G D
-01100860000i[CPU  ] |  CS:0008( 0001| 0|  0) 00000000 00000fff 1 1
-01100860000i[CPU  ] |  DS:0010( 0002| 0|  0) 00000000 00000fff 1 1
-01100860000i[CPU  ] |  SS:0010( 0002| 0|  0) 00000000 00000fff 1 1
-01100860000i[CPU  ] |  ES:0010( 0002| 0|  0) 00000000 00000fff 1 1
-01100860000i[CPU  ] |  FS:0017( 0002| 1|  3) 00000000 0000009f 1 1
-01100860000i[CPU  ] |  GS:0017( 0002| 1|  3) 00000000 0000009f 1 1
-01100860000i[CPU  ] | EIP=00006af9 (00006af9)
-01100860000i[CPU  ] | CR0=0x8000001b CR1=0 CR2=0x0804253c
-01100860000i[CPU  ] | CR3=0x00000000 CR4=0x00000000
-01100860000i[CPU  ] >> jnz .+0xffffffe4 (0x00006adf) : 75E4
-01100860000i[CMOS ] Last time is 1483430366 (Tue Jan  3 15:59:26 2017)
-01100860000i[XGUI ] Exit
-01100860000i[     ] restoring default signal behavior
-01100860000i[CTRL ] quit_sim called with exit code 1
+00021963591i[FDD  ] read() on floppy image returns 0
+00022008546i[FDD  ] read() on floppy image returns 0
+00022053501i[FDD  ] read() on floppy image returns 0
+00022098456i[FDD  ] read() on floppy image returns 0
+00022143411i[FDD  ] read() on floppy image returns 0
+00022188366i[FDD  ] read() on floppy image returns 0
+00022233321i[FDD  ] read() on floppy image returns 0
+00022278276i[FDD  ] read() on floppy image returns 0
+00022323231i[FDD  ] read() on floppy image returns 0
+00022368186i[FDD  ] read() on floppy image returns 0
+00022413141i[FDD  ] read() on floppy image returns 0
+00022463624i[BIOS ] int13_harddisk: function 15, unmapped device for ELDL=81
+39438988000p[XGUI ] >>PANIC<< POWER button turned off.
+39438988000i[CPU  ] CPU is in protected mode (active)
+39438988000i[CPU  ] CS.d_b = 32 bit
+39438988000i[CPU  ] SS.d_b = 32 bit
+39438988000i[CPU  ] | EAX=0001a160  EBX=00000001  ECX=0001b260  EDX=00000017
+39438988000i[CPU  ] | ESP=0001b11c  EBP=00020eac  ESI=00000001  EDI=00000001
+39438988000i[CPU  ] | IOPL=0 id vip vif ac vm rf nt of df IF tf sf zf af pf cf
+39438988000i[CPU  ] | SEG selector     base    limit G D
+39438988000i[CPU  ] | SEG sltr(index|ti|rpl)     base    limit G D
+39438988000i[CPU  ] |  CS:0008( 0001| 0|  0) 00000000 00000fff 1 1
+39438988000i[CPU  ] |  DS:0010( 0002| 0|  0) 00000000 00000fff 1 1
+39438988000i[CPU  ] |  SS:0010( 0002| 0|  0) 00000000 00000fff 1 1
+39438988000i[CPU  ] |  ES:0010( 0002| 0|  0) 00000000 00000fff 1 1
+39438988000i[CPU  ] |  FS:0017( 0002| 1|  3) 00000000 0000009f 1 1
+39438988000i[CPU  ] |  GS:0017( 0002| 1|  3) 00000000 0000009f 1 1
+39438988000i[CPU  ] | EIP=00006b7d (00006b7d)
+39438988000i[CPU  ] | CR0=0x8000001b CR1=0 CR2=0x10007010
+39438988000i[CPU  ] | CR3=0x00000000 CR4=0x00000000
+39438988000i[CPU  ] >> cmp dword ptr ds:[ecx], 0x00000000 : 833900
+39438988000i[CMOS ] Last time is 1483440604 (Tue Jan  3 18:50:04 2017)
+39438988000i[XGUI ] Exit
+39438988000i[     ] restoring default signal behavior
+39438988000i[CTRL ] quit_sim called with exit code 1
