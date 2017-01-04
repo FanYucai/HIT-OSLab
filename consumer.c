@@ -38,18 +38,18 @@ int main()
         perror("sem_open() error!\n");
         return -1;
     }
+    shmid = shmget("buffer");
+    if(shmid == -1)
+    {
+        return -1;
+    }
+    p = (int *)shmat(shmid);
 
     for( i = 0; i < NUMBER; i++ )
     {
         sem_wait(full);
         sem_wait(mutex);
 
-    	shmid = shmget("buffer");
-    	if(shmid == -1)
-    	{
-        	return -1;
-    	}
-    	p = (int *)shmat(shmid);
         data = p[buf_out];
         buf_out = (buf_out + 1) % BUFSIZE;
 
@@ -60,7 +60,6 @@ int main()
         fflush(stdout);
     }
 
-    wait(NULL);
     /*释放信号量*/
     sem_unlink("carpelafull");
     sem_unlink("carpelaempty");

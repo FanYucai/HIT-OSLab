@@ -60,6 +60,7 @@ int main()
         fflush(stdout);
     }
 
+    wait(NULL);
     /*释放信号量*/
     sem_unlink("carpelafull");
     sem_unlink("carpelaempty");
