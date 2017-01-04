@@ -1,69 +1,65 @@
-#define __LIBRARY__  
-#include <unistd.h>  
-#include <linux/sched.h>  
-#include <linux/kernel.h>  
-#include <asm/segment.h>  
-#include <asm/system.h>   
+#define __LIBRARY__
+#include <unistd.h>
+#include <linux/sched.h>
+#include <linux/kernel.h>
+#include <asm/segment.h>
+#include <asm/system.h>
 
-#define SEM_COUNT 32 
-sem_t semaphores[SEM_COUNT]; 
-/*队列相关操作，rear始终是下一个待写入的位置，front始终是队列第一个元素*/
-void init_queue(sem_queue* q)  
-{  
-    q->front = q->rear = 0; 
+#define SEM_COUNT 32
+sem_t semaphores[SEM_COUNT];
+void init_queue(sem_queue* q)
+{
+    q->front = q->rear = 0;
 }
 
 int is_empty(sem_queue* q)
 {
 	return q->front == q->rear?1:0;
 }
-/*留下标QUE_LEN-1不用，判断是否慢*/
 int is_full(sem_queue* q)
-{    
+{
 	return (q->rear+1)%QUE_LEN == q->front?1:0;
 }
-/*获得队列头第一个任务*/
 struct task_struct * get_task(sem_queue* q)
-{
-	if(is_empty(q)) 
+{//get the first one
+	if(is_empty(q))
 	{
-		printk("Queue is empty!\n");
+		printk("empty!\n");
 		return NULL;
 	}
-	struct task_struct *tmp = q->wait_tasks[q->front]; 
+	struct task_struct *tmp = q->wait_tasks[q->front];
 	q->front = (q->front+1)%QUE_LEN;
 	return tmp;
 }
-/*任务插入队列尾*/
+//insert into the rear
 int insert_task(struct task_struct *p,sem_queue* q)
 {
-	// printk("Insert %d",p->pid);
 	if(is_full(q))
 	{
-		printk("Queue is full!\n");
+		printk("full!\n");
 		return -1;
 	}
 	q->wait_tasks[q->rear] = p;
 	q->rear = (q->rear+1)%QUE_LEN;
 	return 1;
 }
-/*信号量是否已打开，是返回位置*/
+//judge if the sem is open
 int sem_location(const char* name)
-{  
+{
     int i;
-    for(i = 0;i < SEM_COUNT; i++)  
-    {  
-        if(strcmp(name,semaphores[i].name) == 0 && semaphores[i].occupied == 1) 
-        {     
-            return i;  
-        }  
-    }  
-    return -1; 
-}  
-/*打开信号量*/
+    for(i = 0;i < SEM_COUNT; i++)
+    {
+        if(strcmp(name,semaphores[i].name) == 0 && semaphores[i].occupied == 1)
+        {
+            return i;
+        }
+    }
+    return -1;
+}
+//open the sem
 sem_t* sys_sem_open(const char* name,unsigned int value)
 {
-	char tmp[16];
+    char tmp[16];
 	char c;
 	int i;
 	for( i = 0; i<16; i++)
@@ -72,9 +68,9 @@ sem_t* sys_sem_open(const char* name,unsigned int value)
 		tmp[i] = c;
 		if(c =='\0') break;
 	}
-	if(c >= 16) 
-	{ 	
-		printk("Semaphore name is too long!");
+	if(c >= 16)
+	{
+		printk("too long!");
 		return NULL;
 	}
 	if((i = sem_location(tmp)) != -1)
@@ -89,22 +85,20 @@ sem_t* sys_sem_open(const char* name,unsigned int value)
 			semaphores[i].occupied = 1;
 			semaphores[i].value = value;
 			init_queue(&(semaphores[i].wait_queue));
-			// printk("%d %d %d %s\n",semaphores[i].occupied,i,semaphores[i].value,semaphores[i].name);
-			// printk("%p\n",&semaphores[i]); 
 			return &semaphores[i];
 		}
-	}	
-	printk("Numbers of semaphores are limited!\n");
+	}
+	printk("You cannot have more sems!\n");
 	return NULL;
-}  
-/*P原子操作*/
+}
+
+//P operation
 int sys_sem_wait(sem_t* sem)
 {
 	cli();
 	sem->value--;
 	if(sem->value < 0)
 	{
-		/*参见sleep_on*/
 		current->state = TASK_UNINTERRUPTIBLE;
 		insert_task(current,&(sem->wait_queue));
 		schedule();
@@ -112,7 +106,7 @@ int sys_sem_wait(sem_t* sem)
 	sti();
 	return 0;
 }
-/*V原子操作*/
+//V operation
 int sys_sem_post(sem_t* sem)
 {
 	cli();
@@ -129,9 +123,8 @@ int sys_sem_post(sem_t* sem)
 	sti();
 	return 0;
 }
-/*释放信号量*/
-int sys_sem_unlink(const char *name)  
-{  
+int sys_sem_unlink(const char *name)
+{
     char tmp[16];
     char c;
 	int i;
@@ -141,18 +134,18 @@ int sys_sem_unlink(const char *name)
 		tmp[i] = c;
 		if(c =='\0') break;
 	}
-	if(c >= 16) 
+	if(c >= 16)
 	{
-		printk("Semphore name is too long!");
+		printk("Too long!");
 		return -1;
 	}
-    int ret = sem_location(tmp); 
+    int ret = sem_location(tmp);
     if(ret != -1)
     {
     	semaphores[ret].value = 0;
     	strcpy(semaphores[ret].name,"\0");
     	semaphores[ret].occupied = 0;
     	return 0;
-    }   
-    return -1;  
+    }
+    return -1;
 }
