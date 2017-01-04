@@ -33,8 +33,12 @@ dep:
 	cp tmp_make Makefile
 
 ### Dependencies:
-shm.s shm.o: shm.c ../include/linux/kernel.h ../include/unistd.h
+sem.s sem.o: sem.c ../include/linux/kernel.h ../include/unistd.h \
+  ../include/errno.h ../include/linux/sched.h \
+  ../include/asm/segment.h ../include/signal.h  ../include/asm/system.h \
+  ../include/string.h ../include/sys/types.h
 memory.o: memory.c ../include/signal.h ../include/sys/types.h \
   ../include/asm/system.h ../include/linux/sched.h \
   ../include/linux/head.h ../include/linux/fs.h ../include/linux/mm.h \
   ../include/linux/kernel.h
+

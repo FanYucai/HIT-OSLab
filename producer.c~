@@ -4,6 +4,7 @@
 #include <fcntl.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <errno.h>
 
 _syscall2(sem_t*,sem_open,const char *,name,unsigned int,value);
 _syscall1(int,sem_wait,sem_t*,sem);
@@ -39,8 +40,13 @@ int main()
         return -1;
     }
     shmid = shmget("buffer");
-    if(shmid == -1)
+    if(shmid == -ENOMEM)
     {
+        /*释放信号量*/
+        fflush(stdout);
+        sem_unlink("carpelafull");
+        sem_unlink("carpelaempty");
+        sem_unlink("carpelamutex");
         return -1;
     }
     p = (int*) shmat(shmid);
@@ -54,9 +60,5 @@ int main()
         sem_post(mutex);
         sem_post(full);
     }
-    /*释放信号量*/
-    sem_unlink("carpelafull");
-    sem_unlink("carpelaempty");
-    sem_unlink("carpelamutex");
     return 0;
 }

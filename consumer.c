@@ -1,69 +1,40 @@
 #define   __LIBRARY__
 #include <unistd.h>
+#include <stdlib.h>
+#include <stdio.h>
 #include <sys/types.h>
 #include <fcntl.h>
-#include <stdio.h>
-#include <stdlib.h>
 
-_syscall2(sem_t*,sem_open,const char *,name,unsigned int,value);
-_syscall1(int,sem_wait,sem_t*,sem);
-_syscall1(int,sem_post,sem_t*,sem);
-_syscall1(int,sem_unlink,const char *,name);
-_syscall1(void*,shmat,int,shmid);
-_syscall1(int,shmget,char*,name);
+#define NUM  550
+#define KEY  10
+#define PAGE  4096
 
-#define NUMBER 520 /*打出数字总数*/
-#define BUFSIZE 10 /*缓冲区大小*/
-
-sem_t   *empty, *full, *mutex;
+_syscall2(int,sem_open, const char*, name, unsigned int , value)
+_syscall1(int, sem_wait, sem_t *, sem)
+_syscall1(int, sem_post, sem_t *, sem)
+_syscall1(int, sem_unlink, const char  *, name)
+_syscall2(int, shmget, key_t, key, size_t, size)
+_syscall2(void *, shmat, int, phyAddr, const void*, shmaddr)
 
 int main()
 {
-    int  i,shmid,data;
-    int *p;
-    int  buf_out = 0; /*从缓冲区读取位置*/
-    /*打开信号量*/
-    if((mutex = sem_open("carpelamutex",1)) == SEM_FAILED)
-    {
-        perror("sem_open() error!\n");
-        return -1;
-    }
-    if((empty = sem_open("carpelaempty",10)) == SEM_FAILED)
-    {
-        perror("sem_open() error!\n");
-        return -1;
-    }
-    if((full = sem_open("carpelafull",0)) == SEM_FAILED)
-    {
-        perror("sem_open() error!\n");
-        return -1;
-    }
-    shmid = shmget("buffer");
-    if(shmid == -1)
-    {
-        return -1;
-    }
-    p = (int *)shmat(shmid);
-
-    for( i = 0; i < NUMBER; i++ )
-    {
-        sem_wait(full);
+    int i, phyAddr, *shmaddr;
+    sem_t *empty, *full, *mutex;
+    empty = (sem_t *)sem_open("empty",10);
+    full  = (sem_t *)sem_open("full", 0);
+    mutex = (sem_t *)sem_open("mutex", 1);
+    phyAddr = shmget((key_t)KEY, PAGE);
+    shmaddr = (int*)shmat(phyAddr,NULL);
+    for(i = 0 ; i < NUM; i++) {
+    	sem_wait(full);
         sem_wait(mutex);
-
-        data = p[buf_out];
-        buf_out = (buf_out + 1) % BUFSIZE;
-
+        printf("%d: %d\n",getpid(), shmaddr[i%10]);
+        fflush(stdout);
         sem_post(mutex);
         sem_post(empty);
-        /*消费资源*/
-        printf("%d:  %d\n",getpid(),data);
-        fflush(stdout);
     }
-
-    /*释放信号量*/
-    sem_unlink("carpelafull");
-    sem_unlink("carpelaempty");
-    sem_unlink("carpelamutex");
-
+    sem_unlink("empty");
+    sem_unlink("full");
+    sem_unlink("mutex");
     return 0;
 }

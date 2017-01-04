@@ -429,4 +429,3 @@ void calc_mem(void)
 		}
 	}
 }
-
