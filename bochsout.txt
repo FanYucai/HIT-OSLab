@@ -34,12 +34,12 @@
 00000000000i[     ]   SB16 support: no
 00000000000i[     ]   USB support: no
 00000000000i[     ]   VGA extension support: vbe 
-00000000000i[MEM0 ] allocated memory at 0xb5eaa008. after alignment, vector=0xb5eab000
+00000000000i[MEM0 ] allocated memory at 0xb5efc008. after alignment, vector=0xb5efd000
 00000000000i[MEM0 ] 16.00MB
 00000000000i[MEM0 ] rom at 0xfffe0000/131072 ('./bochs/BIOS-bochs-latest')
 00000000000i[MEM0 ] rom at 0xc0000/39424 ('./bochs/vgabios.bin')
 00000000000i[CMOS ] Using local time for initial clock
-00000000000i[CMOS ] Setting initial clock to: Thu Jan  5 14:16:34 2017 (time0=1483596994)
+00000000000i[CMOS ] Setting initial clock to: Thu Jan  5 17:08:07 2017 (time0=1483607287)
 00000000000i[DMA  ] channel 4 used by cascade
 00000000000i[DMA  ] channel 2 used by Floppy Drive
 00000000000i[FDD  ] fd0: './linux-0.11/Image' ro=0, h=2,t=80,spt=18
@@ -245,26 +245,26 @@
 00022330481i[FDD  ] read() on floppy image returns 0
 00022375436i[FDD  ] read() on floppy image returns 0
 00022420391i[FDD  ] read() on floppy image returns 0
-00065280000p[XGUI ] >>PANIC<< POWER button turned off.
-00065280000i[CPU  ] CPU is in real mode (active)
-00065280000i[CPU  ] CS.d_b = 16 bit
-00065280000i[CPU  ] SS.d_b = 16 bit
-00065280000i[CPU  ] | EAX=00004e0a  EBX=00000007  ECX=0000008b  EDX=00000007
-00065280000i[CPU  ] | ESP=0000fef8  EBP=00000309  ESI=ffff0063  EDI=000800a1
-00065280000i[CPU  ] | IOPL=0 id vip vif ac vm rf nt of df if tf SF zf af PF cf
-00065280000i[CPU  ] | SEG selector     base    limit G D
-00065280000i[CPU  ] | SEG sltr(index|ti|rpl)     base    limit G D
-00065280000i[CPU  ] |  CS:f000( 0004| 0|  0) 000f0000 0000ffff 0 0
-00065280000i[CPU  ] |  DS:9000( 0005| 0|  0) 00090000 0000ffff 0 0
-00065280000i[CPU  ] |  SS:9000( 0005| 0|  0) 00090000 0000ffff 0 0
-00065280000i[CPU  ] |  ES:9020( 0005| 0|  0) 00090200 0000ffff 0 0
-00065280000i[CPU  ] |  FS:0000( 0005| 0|  0) 00000000 0000ffff 0 0
-00065280000i[CPU  ] |  GS:0000( 0005| 0|  0) 00000000 0000ffff 0 0
-00065280000i[CPU  ] | EIP=0000ff53 (0000fa42)
-00065280000i[CPU  ] | CR0=0x60000010 CR1=0 CR2=0x00000000
-00065280000i[CPU  ] | CR3=0x00000000 CR4=0x00000000
-00065280000i[CPU  ] >> add byte ptr ds:[bx+si], al : 0000
-00065280000i[CMOS ] Last time is 1483597010 (Thu Jan  5 14:16:50 2017)
-00065280000i[XGUI ] Exit
-00065280000i[     ] restoring default signal behavior
-00065280000i[CTRL ] quit_sim called with exit code 1
+00078848000p[XGUI ] >>PANIC<< POWER button turned off.
+00078848000i[CPU  ] CPU is in real mode (active)
+00078848000i[CPU  ] CS.d_b = 16 bit
+00078848000i[CPU  ] SS.d_b = 16 bit
+00078848000i[CPU  ] | EAX=00004e0a  EBX=00000007  ECX=0000008b  EDX=00000007
+00078848000i[CPU  ] | ESP=0000fef8  EBP=00000309  ESI=ffff0063  EDI=000800a1
+00078848000i[CPU  ] | IOPL=0 id vip vif ac vm rf nt of df if tf SF zf af PF cf
+00078848000i[CPU  ] | SEG selector     base    limit G D
+00078848000i[CPU  ] | SEG sltr(index|ti|rpl)     base    limit G D
+00078848000i[CPU  ] |  CS:f000( 0004| 0|  0) 000f0000 0000ffff 0 0
+00078848000i[CPU  ] |  DS:9000( 0005| 0|  0) 00090000 0000ffff 0 0
+00078848000i[CPU  ] |  SS:9000( 0005| 0|  0) 00090000 0000ffff 0 0
+00078848000i[CPU  ] |  ES:9020( 0005| 0|  0) 00090200 0000ffff 0 0
+00078848000i[CPU  ] |  FS:0000( 0005| 0|  0) 00000000 0000ffff 0 0
+00078848000i[CPU  ] |  GS:0000( 0005| 0|  0) 00000000 0000ffff 0 0
+00078848000i[CPU  ] | EIP=0000ff53 (0000fa42)
+00078848000i[CPU  ] | CR0=0x60000010 CR1=0 CR2=0x00000000
+00078848000i[CPU  ] | CR3=0x00000000 CR4=0x00000000
+00078848000i[CPU  ] >> add byte ptr ds:[bx+si], al : 0000
+00078848000i[CMOS ] Last time is 1483607306 (Thu Jan  5 17:08:26 2017)
+00078848000i[XGUI ] Exit
+00078848000i[     ] restoring default signal behavior
+00078848000i[CTRL ] quit_sim called with exit code 1
