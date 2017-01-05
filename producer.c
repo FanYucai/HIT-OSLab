@@ -22,33 +22,21 @@ int main()
 {
     int i, flag, phyAddr,* shmaddr;
     sem_t *empty, *full, *mutex;
-    flag = 0;
     empty = (sem_t *)sem_open("empty",10);
     full  = (sem_t *)sem_open("full", 0);
     mutex = (sem_t *)sem_open("mutex", 1);
     phyAddr = shmget((key_t) KEY,PAGE);
-    if(phyAddr == -EINVAL) {
-        printf("Size is over than 4K");
-        flag = 1;
-    }else if(phyAddr == -ENOMEM) {
-        printf("No free page");
-        flag = 1;
+    shmaddr = (int*)shmat(phyAddr,NULL);
+    for( i = 0 ; i < NUM; i++) {
+        sem_wait(empty);
+        sem_wait(mutex);
+        shmaddr[i%10] = i;
+        sem_post(mutex);
+        sem_post(full);
     }
-    else {
-        shmaddr = (int*)shmat(phyAddr,NULL);
-        for( i = 0 ; i < NUM; i++) {
-            sem_wait(empty);
-            sem_wait(mutex);
-            shmaddr[i%10] = i;
-            sem_post(mutex);
-            sem_post(full);
-        }
-    }
-    if (flag) {
-        fflush(stdout);
-        sem_unlink("empty");
-        sem_unlink("full");
-        sem_unlink("mutex");
-    }
+    fflush(stdout);
+    sem_unlink("empty");
+    sem_unlink("full");
+    sem_unlink("mutex");
     return 0;
 }
