@@ -142,7 +142,7 @@ void wait_for_keypress(void)
 	sleep_if_empty(&tty_table[0].secondary);
 }
 
-int judge=-1;
+int judge=0;
 int f1=0,f2=0,f3=0;
 
 void copy_to_cooked(struct tty_struct * tty)
@@ -159,7 +159,7 @@ void copy_to_cooked(struct tty_struct * tty)
 			f3=1;
 		else if(f1==1&&f2==1&&f3==1&&c==76)
 		{
-			judge*=-1;
+			judge++;
 			continue;
 		}
 		else

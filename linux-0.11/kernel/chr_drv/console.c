@@ -460,7 +460,7 @@ void con_write(struct tty_struct * tty)
 						pos -= video_size_row;
 						lf();
 					}
-					if(judge==1)
+					if(judge%2==1)
 						if((c>='a'&&c<='z')||(c>='A'&&c<='Z')||(c>='0'&&c<='9'))
 							c='*';
 					__asm__("movb attr,%%ah\n\t"
@@ -630,7 +630,7 @@ void con_init(void)
 	video_num_lines = ORIG_VIDEO_LINES;
 	video_page = ORIG_VIDEO_PAGE;
 	video_erase_char = 0x0720;
-	
+
 	if (ORIG_VIDEO_MODE == 7)			/* Is this a monochrome display? */
 	{
 		video_mem_start = 0xb0000;
@@ -669,16 +669,16 @@ void con_init(void)
 	}
 
 	/* Let the user known what kind of display driver we are using */
-	
+
 	display_ptr = ((char *)video_mem_start) + video_size_row - 8;
 	while (*display_desc)
 	{
 		*display_ptr++ = *display_desc++;
 		display_ptr++;
 	}
-	
+
 	/* Initialize the variables used for scrolling (mostly EGA/VGA)	*/
-	
+
 	origin	= video_mem_start;
 	scr_end	= video_mem_start + video_num_lines * video_size_row;
 	top	= 0;
@@ -711,5 +711,5 @@ static void sysbeep(void)
 	outb_p(0x37, 0x42);
 	outb(0x06, 0x42);
 	/* 1/8 second */
-	beepcount = HZ/8;	
+	beepcount = HZ/8;
 }
