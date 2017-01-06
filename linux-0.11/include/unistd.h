@@ -50,6 +50,22 @@
 #define _PC_VDISABLE		8
 #define _PC_CHOWN_RESTRICTED	9
 
+/*与信号量有关的所有声明和宏都放在此处*/
+#define QUEUE_SIZE 100
+/*定义了一个队列类型*/
+struct Que{
+  int front;
+  int rear;
+  struct task_struct* waitQue[QUEUE_SIZE];
+};
+typedef struct Que Que;
+/*定义了信号量类型*/
+struct sem_t{
+  int value;/*信号量的值*/
+  Que* queue;/*信号量维护的队列*/
+};
+typedef struct sem_t sem_t;
+
 #include <sys/stat.h>
 #include <sys/times.h>
 #include <sys/utsname.h>
@@ -129,30 +145,13 @@
 #define __NR_ssetmask	69
 #define __NR_setreuid	70
 #define __NR_setregid	71
-#define __NR_sem_open 	72
-#define __NR_sem_wait	73
-#define __NR_sem_post	74
-#define __NR_sem_unlink 75
+/*添加系统调用声明*/
+#define __NR_sem_open   72
+#define __NR_sem_unlink 73
+#define __NR_sem_wait   74
+#define __NR_sem_post   75
 
-#define QUE_LEN 16
-#define SEM_FAILED  (void*) 0
-struct semaphore_queue
-{
-	int front;
-	int rear;
-	struct task_struct *wait_tasks[QUE_LEN];
-};
-typedef struct semaphore_queue sem_queue;
 
-struct semaphore_t
-{
-    int value;
-    int occupied;
-    char name[16];
-    struct semaphore_queue wait_queue;
-};
-typedef struct semaphore_t sem_t;
- 
 #define _syscall0(type,name) \
 type name(void) \
 { \

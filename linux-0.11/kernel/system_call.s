@@ -4,32 +4,6 @@
  *  (C) 1991  Linus Torvalds
  */
 
-/*
- *  system_call.s  contains the system-call low-level handling routines.
- * This also contains the timer-interrupt handler, as some of the code is
- * the same. The hd- and flopppy-interrupts are also here.
- *
- * NOTE: This code handles signal-recognition, which happens every time
- * after a timer-interrupt and after each system call. Ordinary interrupts
- * don't handle signal-recognition, as that would clutter them up totally
- * unnecessarily.
- *
- * Stack layout in 'ret_from_system_call':
- *
- *	 0(%esp) - %eax
- *	 4(%esp) - %ebx
- *	 8(%esp) - %ecx
- *	 C(%esp) - %edx
- *	10(%esp) - %fs
- *	14(%esp) - %es
- *	18(%esp) - %ds
- *	1C(%esp) - %eip
- *	20(%esp) - %cs
- *	24(%esp) - %eflags
- *	28(%esp) - %oldesp
- *	2C(%esp) - %oldss
- */
-
 SIG_CHLD	= 17
 
 EAX		= 0x00
@@ -57,8 +31,8 @@ sa_handler = 0
 sa_mask = 4
 sa_flags = 8
 sa_restorer = 12
-
-nr_system_calls = 76
+/*修改总的系统调用数*/
+nr_system_calls = 78
 
 /*
  * Ok, I get parallel printer interrupts while using the floppy for some

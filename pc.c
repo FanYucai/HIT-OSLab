@@ -1,100 +1,83 @@
 #define   __LIBRARY__
-#include <unistd.h>
+#include <sys/stat.h>
 #include <sys/types.h>
+#include <unistd.h>
 #include <fcntl.h>
 #include <stdio.h>
 #include <stdlib.h>
 
-_syscall2(sem_t*,sem_open,const char *,name,unsigned int,value);
-_syscall1(int,sem_wait,sem_t*,sem);
-_syscall1(int,sem_post,sem_t*,sem);
-_syscall1(int,sem_unlink,const char *,name);
+_syscall2(sem_t  *, sem_open, const char*, name, unsigned int , value)
+_syscall1(int, sem_wait, sem_t  *, sem)
+_syscall1(int, sem_post, sem_t  *, sem)
+_syscall1(int, sem_unlink, const char  *, name)
 
-#define NUMBER 1000
-#define CHILD 5
-#define BUFSIZE 10
+int main (){
+    const int NUM = 500;
+    const int p_NUM = 5;
+    FILE * fp;
+    int buf[10],i,j=0,k=1;
+    int n,out;
+    sem_t *full, *empty, *mutex;
+    full = sem_open("full",0);
+    empty = sem_open("empty",10);
+    mutex = sem_open("mutex",1);
 
-sem_t   *empty, *full, *mutex;
-int fno;
-
-int main()
-{
-    int  i,j,k;
-    int  data;
-    pid_t p;
-    int  buf_out = 0;
-    int  buf_in = 0;
-    if((mutex = sem_open("carmutex",1)) == SEM_FAILED)
+    if (!fork())
     {
-        perror("sem_open() error!\n");
-        return -1;
-    }
-    if((empty = sem_open("carempty",10)) == SEM_FAILED)
-    {
-        perror("sem_open() error!\n");
-        return -1;
-    }
-    if((full = sem_open("carfull",0)) == SEM_FAILED)
-    {
-        perror("sem_open() error!\n");
-        return -1;
-    }
-    fno = open("buffer.dat",O_CREAT|O_RDWR|O_TRUNC,0666);
-    lseek(fno,10*sizeof(int),SEEK_SET);
-    write(fno,(char *)&buf_out,sizeof(int));
-    if((p=fork())==0)
-    {
-        for( i = 0 ; i < NUMBER; i++)
+        for (i = 0;i < NUM;i ++)
         {
-            sem_wait(empty);
-            sem_wait(mutex);
-            lseek(fno, buf_in*sizeof(int), SEEK_SET);
-            write(fno,(char *)&i,sizeof(int));
-            buf_in = ( buf_in + 1)% BUFSIZE;
-
-            sem_post(mutex);
-            sem_post(full);
-        }
-        return 0;
+      	    sem_wait(empty);
+      	    sem_wait(mutex);
+      	    fp = fopen("buffer.txt","ab+");
+      	    fwrite(&i,sizeof(int),1,fp);
+      	    fflush(fp);
+      	    fclose(fp);
+      	    sem_post(mutex);
+      	    sem_post(full);
+      	}
+	       exit(0);
     }
-    else if(p < 0)
+    for (i = 0;i < p_NUM;i++)
     {
-        perror("Fail to fork!\n");
-        return -1;
-    }
-
-    for( j = 0; j < CHILD ; j++ )
-    {
-        if((p=fork())==0)
+	     if (!fork())
         {
-            for( k = 0; k < NUMBER/CHILD; k++ )
+	         for (n = 0;n < NUM/p_NUM;n ++)
             {
                 sem_wait(full);
                 sem_wait(mutex);
-                lseek(fno,10*sizeof(int),SEEK_SET);
-                read(fno,(char *)&buf_out,sizeof(int));
-                lseek(fno,buf_out*sizeof(int),SEEK_SET);
-                read(fno,(char *)&data,sizeof(int));
-                buf_out = (buf_out + 1) % BUFSIZE;
-                lseek(fno,10*sizeof(int),SEEK_SET);
-                write(fno,(char *)&buf_out,sizeof(int));
+                fflush(stdout);
+                fp = fopen("buffer.txt","rb+");
+                j=0;
+
+                while(j<10){
+                    out = -1;
+                    fread(&out,sizeof(int),1,fp);
+                    buf[j] = out;
+                    j++;
+                }
+		        fclose(fp);
+
+		        printf (" %d :%d \n",getpid(),buf[0]);
+		        fflush(stdout);
+		        fp = fopen("buffer.txt","wb");
+
+                k=1;
+                while(k<10){
+                    if (buf[k] > 0)
+                        fwrite((buf+k),sizeof(int),1,fp);
+                    k++;
+                }
+                fflush(fp);
+                fclose(fp);
                 sem_post(mutex);
                 sem_post(empty);
-                printf("%d:  %d\n",getpid(),data);
-                fflush(stdout);
-            }
-            return 0;
-        }
-        else if(p<0)
-        {
-            perror("Fail to fork!\n");
-            return -1;
+	        }
+	        exit(0);
         }
     }
     wait(NULL);
-    sem_unlink("carfull");
-    sem_unlink("carempty");
-    sem_unlink("carmutex");
-    close(fno);
+    sem_unlink("full");
+    sem_unlink("empty");
+    sem_unlink("mutex");
     return 0;
 }
