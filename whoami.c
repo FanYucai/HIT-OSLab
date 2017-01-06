@@ -6,9 +6,9 @@ _syscall2(int, whoami,char*,name,unsigned int,size);
 
 int main()
 {
-        char s[30];
-            whoami(s,30);
-                printf("%s",s);
-                    return 0;
+    char s[30];
+    whoami(s,30);
+    printf("%s",s);
+    return 0;
 
 }
