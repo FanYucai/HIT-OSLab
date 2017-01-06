@@ -7,7 +7,7 @@ _syscall1(int, iam, const char*, name);
 
 int main(int argc,char ** argv)
 {
-        iam(argv[1]);
-            return 0;
+    iam(argv[1]);
+    return 0;
 
 }
