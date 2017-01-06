@@ -34,12 +34,12 @@
 00000000000i[     ]   SB16 support: no
 00000000000i[     ]   USB support: no
 00000000000i[     ]   VGA extension support: vbe 
-00000000000i[MEM0 ] allocated memory at 0xb607f008. after alignment, vector=0xb6080000
+00000000000i[MEM0 ] allocated memory at 0xb5ecf008. after alignment, vector=0xb5ed0000
 00000000000i[MEM0 ] 16.00MB
 00000000000i[MEM0 ] rom at 0xfffe0000/131072 ('./bochs/BIOS-bochs-latest')
 00000000000i[MEM0 ] rom at 0xc0000/39424 ('./bochs/vgabios.bin')
 00000000000i[CMOS ] Using local time for initial clock
-00000000000i[CMOS ] Setting initial clock to: Tue Dec  6 16:47:06 2016 (time0=1481014026)
+00000000000i[CMOS ] Setting initial clock to: Fri Jan  6 19:50:17 2017 (time0=1483703417)
 00000000000i[DMA  ] channel 4 used by cascade
 00000000000i[DMA  ] channel 2 used by Floppy Drive
 00000000000i[FDD  ] fd0: './linux-0.11/Image' ro=0, h=2,t=80,spt=18
@@ -68,7 +68,7 @@
 00000000000i[PAR  ] parallel port 1 at 0x0378 irq 7
 00000000000i[     ] init_dev of 'extfpuirq' plugin device by virtual method
 00000000000i[     ] init_dev of 'speaker' plugin device by virtual method
-00000000000i[SPEAK] Failed to open /dev/console: Resource temporarily unavailable
+00000000000i[SPEAK] Failed to open /dev/console: 资源暂时不可用
 00000000000i[SPEAK] Deactivating beep on console
 00000000000i[     ] register state of 'harddrv' plugin device by virtual method
 00000000000i[     ] register state of 'keyboard' plugin device by virtual method
@@ -98,11 +98,7 @@
 00001200000i[XGUI ] charmap update. Font Height is 16
 00004769035i[BIOS ] IDE time out
 00004967898i[BIOS ] Booting from 0000:7c00
-00015838761i[FDD  ] partial read() on floppy image returns 161/512
-00015883716i[FDD  ] read() on floppy image returns 0
-00015928671i[FDD  ] read() on floppy image returns 0
-00015973626i[FDD  ] read() on floppy image returns 0
-00016018581i[FDD  ] read() on floppy image returns 0
+00016018581i[FDD  ] partial read() on floppy image returns 161/512
 00016063536i[FDD  ] read() on floppy image returns 0
 00016108491i[FDD  ] read() on floppy image returns 0
 00016153446i[FDD  ] read() on floppy image returns 0
@@ -246,26 +242,26 @@
 00022368451i[FDD  ] read() on floppy image returns 0
 00022413406i[FDD  ] read() on floppy image returns 0
 00022463876i[BIOS ] int13_harddisk: function 15, unmapped device for ELDL=81
-00232352000i[     ] cpu loop quit, shutting down simulator
-00232352000i[CPU  ] CPU is in protected mode (active)
-00232352000i[CPU  ] CS.d_b = 32 bit
-00232352000i[CPU  ] SS.d_b = 32 bit
-00232352000i[CPU  ] | EAX=ffffffff  EBX=00000002  ECX=0001b16c  EDX=00fc1000
-00232352000i[CPU  ] | ESP=0001b0f8  EBP=00020e6c  ESI=00000001  EDI=00000001
-00232352000i[CPU  ] | IOPL=0 id vip vif ac vm rf nt of df IF tf sf ZF af PF cf
-00232352000i[CPU  ] | SEG selector     base    limit G D
-00232352000i[CPU  ] | SEG sltr(index|ti|rpl)     base    limit G D
-00232352000i[CPU  ] |  CS:0008( 0001| 0|  0) 00000000 00000fff 1 1
-00232352000i[CPU  ] |  DS:0010( 0002| 0|  0) 00000000 00000fff 1 1
-00232352000i[CPU  ] |  SS:0010( 0002| 0|  0) 00000000 00000fff 1 1
-00232352000i[CPU  ] |  ES:0010( 0002| 0|  0) 00000000 00000fff 1 1
-00232352000i[CPU  ] |  FS:0017( 0002| 1|  3) 00000000 0000009f 1 1
-00232352000i[CPU  ] |  GS:0017( 0002| 1|  3) 00000000 0000009f 1 1
-00232352000i[CPU  ] | EIP=00006ab0 (00006ab0)
-00232352000i[CPU  ] | CR0=0x8000001b CR1=0 CR2=0x08032ef0
-00232352000i[CPU  ] | CR3=0x00000000 CR4=0x00000000
-00232352000i[CPU  ] >> test dword ptr ds:[edx+0xc], eax : 85420C
-00232352000i[CMOS ] Last time is 1481014084 (Tue Dec  6 16:48:04 2016)
-00232352000i[XGUI ] Exit
-00232352000i[     ] restoring default signal behavior
-00232352000i[CTRL ] quit_sim called with exit code 1
+00097240000p[XGUI ] >>PANIC<< POWER button turned off.
+00097240000i[CPU  ] CPU is in protected mode (active)
+00097240000i[CPU  ] CS.d_b = 32 bit
+00097240000i[CPU  ] SS.d_b = 32 bit
+00097240000i[CPU  ] | EAX=0001a940  EBX=0001b9c8  ECX=0001a940  EDX=00000020
+00097240000i[CPU  ] | ESP=0001b8f0  EBP=00021a6c  ESI=00000001  EDI=00000001
+00097240000i[CPU  ] | IOPL=0 id vip vif ac vm rf nt of df IF tf sf ZF af PF cf
+00097240000i[CPU  ] | SEG selector     base    limit G D
+00097240000i[CPU  ] | SEG sltr(index|ti|rpl)     base    limit G D
+00097240000i[CPU  ] |  CS:0008( 0001| 0|  0) 00000000 00000fff 1 1
+00097240000i[CPU  ] |  DS:0010( 0002| 0|  0) 00000000 00000fff 1 1
+00097240000i[CPU  ] |  SS:0010( 0002| 0|  0) 00000000 00000fff 1 1
+00097240000i[CPU  ] |  ES:0010( 0002| 0|  0) 00000000 00000fff 1 1
+00097240000i[CPU  ] |  FS:0017( 0002| 1|  3) 00000000 0000009f 1 1
+00097240000i[CPU  ] |  GS:0017( 0002| 1|  3) 00000000 0000009f 1 1
+00097240000i[CPU  ] | EIP=00006ad4 (00006ad4)
+00097240000i[CPU  ] | CR0=0x8000001b CR1=0 CR2=0x08032ef0
+00097240000i[CPU  ] | CR3=0x00000000 CR4=0x00000000
+00097240000i[CPU  ] >> jz .+0x00000067 (0x00006b3d) : 7467
+00097240000i[CMOS ] Last time is 1483703441 (Fri Jan  6 19:50:41 2017)
+00097240000i[XGUI ] Exit
+00097240000i[     ] restoring default signal behavior
+00097240000i[CTRL ] quit_sim called with exit code 1
